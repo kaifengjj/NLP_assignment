@@ -1,4 +1,9 @@
 
+from sys import platform as sys_pf
+if sys_pf == 'darwin':
+    import matplotlib
+    matplotlib.use("TkAgg")
+
 from matplotlib.pyplot import show
 import random
 
@@ -152,34 +157,33 @@ air_route = {
     NY: {BJ}
 }
 
-# import networkx
+import networkx
 #
 #
-#air_oute= networkx.Graph(air_route)
+air_route2= networkx.Graph(air_route)
 #
-#networkkx.draw(air_route1, with_labels=True)
+networkx.draw(air_route2, with_labels=True)
+
+
 #
 #
 
 
-def search_desitination(graph, start, destination):
+def search_destination(graph, start, destination):
     pathes = [[start]]
     seen = set()
-    choosen_pathes = []
     while pathes:
         path = pathes.pop(0)
-        froniter = path[-1]
-        if froniter in seen: continue
+        frontier = path[-1]
+        if frontier in seen: continue
         # get new lines
-
-        for city in graph[froniter]:
+        for city in graph[frontier]:
             new_path = path + [city]
             pathes.append(new_path)
             if city == destination: return new_path
 
-        seen.add(city)
-    return choosen_pathes
+        seen.add(frontier)
+    return None
 
-
-print(search_desitination(air_route,BJ,SZ))
+print(search_destination(air_route, NY, CM))
 
